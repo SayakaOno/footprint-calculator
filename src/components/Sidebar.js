@@ -7,8 +7,8 @@ class Sidebar extends React.Component {
     distination: null
   };
 
-  handleInput = event => {
-    this.props.onChange(event.target.value);
+  handleInput = (event, fieldName) => {
+    this.props.onChange(fieldName, event.target.value);
   };
 
   onButtonClick = () => {
@@ -19,14 +19,20 @@ class Sidebar extends React.Component {
     return (
       <Menu pageWrapId={'page-wrap'} outerContainerId={'outer-container'}>
         <input
+          name='currentLocation'
+          type='text'
+          value={this.props.currentLocation}
+          onChange={e => this.handleInput(e, 'currentLocation')}
+        />
+        <input
           name='destination'
           type='text'
-          value={this.state.locationA}
-          onChange={this.handleInput}
+          value={this.props.destination}
+          onChange={e => this.handleInput(e, 'destination')}
         />
         <ul className='buttons'>
-          <li onClick={this.onButtonClick}>
-            <img src='' />
+          <li onClick={() => this.props.transportation('car')}>
+            <img alt='car' src='' />
             Car
           </li>
           <li>Bus</li>

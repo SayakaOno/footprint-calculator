@@ -4,14 +4,22 @@ import './reset.css';
 import Maps from './Maps/map';
 
 class App extends React.Component {
-  state = { currentPosition: null, destination: null };
+  state = { currentLocation: null, destination: null, transportation: '' };
 
   componentDidMount = () => { };
 
   render() {
     return (
       <div id='outer-container' className='app'>
-        <Sidebar onChange={destination => this.setState({ destination })} />
+        <Sidebar
+          onChange={(fieldName, destination) =>
+            this.setState({ [fieldName]: destination })
+          }
+          onClick={transportation => this.setState({ transportation })}
+          currentLocation={this.state.currentLocation}
+          destination={this.state.destination}
+          transportation={this.state.transportation}
+        />
         <h1>Carbon Footprint Calculator</h1>
         <Maps origin='UBC' destination='University of Victoria'>Maps</Maps>
       </div>
