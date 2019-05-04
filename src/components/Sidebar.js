@@ -15,12 +15,12 @@ class Sidebar extends React.Component {
     distination: null
   };
 
-  onButtonClick = () => {
-    console.log('clicked');
-  };
-
   handleInput = (event, fieldName) => {
     this.props.onChange(fieldName, event.target.value);
+  };
+
+  onButtonClick = () => {
+    console.log('clicked');
   };
 
   render() {
@@ -41,7 +41,6 @@ class Sidebar extends React.Component {
         <br />
         <label htmlFor='destination'>B</label>
         <input
-          id='destination'
           name='destination'
           type='text'
           value={this.props.destination}
