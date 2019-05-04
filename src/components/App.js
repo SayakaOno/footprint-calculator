@@ -1,17 +1,19 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import './reset.css';
+import Maps from './Maps/map';
 
 class App extends React.Component {
   state = { currentPosition: null, destination: null };
 
-  componentDidMount = () => {};
+  componentDidMount = () => { };
 
   render() {
     return (
       <div id='outer-container' className='app'>
         <Sidebar onChange={destination => this.setState({ destination })} />
         <h1>Carbon Footprint Calculator</h1>
+        <Maps>Maps</Maps>
       </div>
     );
   }
