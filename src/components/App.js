@@ -4,7 +4,7 @@ import './reset.css';
 import Maps from './Maps/map';
 
 class App extends React.Component {
-  state = { currentLocation: null, destination: null, transportation: '' };
+  state = { currentLocation: '', destination: '', transportation: '' };
 
   componentDidMount = () => { };
 
