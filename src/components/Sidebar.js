@@ -31,13 +31,18 @@ class Sidebar extends React.Component {
           onChange={e => this.handleInput(e, 'destination')}
         />
         <ul className='buttons'>
-          <li onClick={() => this.props.transportation('car')}>
+          <li onClick={() => this.props.onClick('car')}>
             <img alt='car' src='' />
-            Car
           </li>
-          <li>Bus</li>
-          <li>Bicycle</li>
-          <li>Walk</li>
+          <li onClick={() => this.props.onClick('bus')}>
+            <img alt='bus' src='' />
+          </li>
+          <li onClick={() => this.props.onClick('bicycle')}>
+            <img alt='bicycle' src='' />
+          </li>
+          <li onClick={() => this.props.onClick('walk')}>
+            <img alt='walk' src='' />
+          </li>
         </ul>
       </Menu>
     );
