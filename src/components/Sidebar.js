@@ -9,7 +9,6 @@ import driving_icon from '../images/driving_icon.png';
 import transit_icon from '../images/transit_icon.png';
 import walking_icon from '../images/walking_icon.png';
 import title from '../images/title.png';
-import trivia from '../images/trivia.png';
 
 class Sidebar extends React.Component {
   state = {
