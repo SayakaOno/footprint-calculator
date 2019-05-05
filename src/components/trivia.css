@@ -1,6 +1,21 @@
 .trivia {
   position: fixed;
-  bottom: 50px;
-  right: 100px;
-  background: green;
+  bottom: 20px;
+  right: 60px;
+  width: 280px;
+  height: 60px;
+  border-radius: 30px;
+  border: solid 1px green;
+  background-color: #fff;
+  padding: 30px 120px 30px 30px;
+  /* background-image: url(); */
+}
+.trivia h2 {
+  color: green;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+}
+.trivia a {
+  color: green;
 }
