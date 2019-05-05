@@ -12,7 +12,8 @@ class App extends React.Component {
     transportation: '',
     option: 'departure_time',
     time: '08:00:00',
-    date: 'May 5, 2019'
+    date: 'May 5, 2019',
+    amount: null
   };
 
   componentDidMount = () => {
@@ -31,6 +32,10 @@ class App extends React.Component {
 
   getTime = () => {
     return new Date(this.state.date + ' ' + this.state.time);
+  };
+
+  setEmittedCO2 = amount => {
+    this.setState({ amount });
   };
 
   render() {
@@ -53,12 +58,16 @@ class App extends React.Component {
               travelMode={this.state.transportation}
               option={this.state.option}
               time={this.state.time && this.state.date ? this.getTime() : null}
+              setEmittedCO2={this.setEmittedCO2}
             >
               Maps
             </Maps>
           </div>
         </div>
-        <Trivia />
+        <Trivia
+          travelMode={this.state.transportation}
+          amount={this.state.amount}
+        />
       </div>
     );
   }
