@@ -36,7 +36,13 @@ class App extends React.Component {
             transportation={this.state.transportation}
           />
           <div className='map'>
-            <Maps>Maps</Maps>
+            <Maps
+              origin={this.state.currentLocation}
+              destination={this.state.destination}
+              travelMode={this.state.transportation}
+            >
+              Maps
+            </Maps>
           </div>
         </div>
         <Trivia />
