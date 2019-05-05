@@ -1,0 +1,8 @@
+@media only screen and (min-width: 500px) {
+  .container {
+    display: flex;
+  }
+}
+.map {
+  height: 100vh;
+}
