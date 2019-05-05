@@ -28,6 +28,27 @@ export class MapContainer extends React.Component {
                 console.log(response.routes.length);
                 console.log(response.routes[0].legs[0].distance.text);
                 console.log(response.routes[0].legs[0].duration.text);
+
+                const distances = response.routes.map(route => {
+                    return parseFloat(route.legs[0].distance.text.split(' ')[0], 10);
+                });
+                const durations = response.routes.map(route => {
+                    return route.legs[0].duration.text;    
+                });
+
+                const minDistance = Math.min(...distances);
+                const carbonEmissionInKg = 0.251 * minDistance;
+
+                console.log(distances);
+                console.log(durations);
+                var footprintInfo = {
+                    travelMode: "",
+                    duration: "",
+                    distance: "",
+                    footprint: carbonEmissionInKg
+                };
+                console.log(`${footprintInfo.footprint}kg`);
+                debugger;
             } else {
                 window.alert('Directions request failed due to ' + status);
             }
