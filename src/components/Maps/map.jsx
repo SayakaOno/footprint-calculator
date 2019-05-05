@@ -1,18 +1,65 @@
 import React from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, InfoWindow, GoogleApiWrapper} from 'google-maps-react';
  
 export class MapContainer extends React.Component {
+    // travel modes:
+    //  - driving
+    //  - bicycling
+    //  - transit
+    //  - walking
+
+    onReady(mapProps, map) {
+        const {google} = mapProps;
+        const DirectionsService = new google.maps.DirectionsService();
+        const DirectionsDisplay = new google.maps.DirectionsRenderer();
+        DirectionsDisplay.setMap(map);
+        DirectionsDisplay.setPanel(document.getElementById('DirectionsPanel'));
+        DirectionsService.route({
+            origin: 'UBC',
+            destination: 'SFU',
+            travelMode: 'TRANSIT',
+            provideRouteAlternatives: true,
+            transitOptions: {
+                departureTime: new Date()
+            }
+        }, (response, status) => {
+            if (status === 'OK') {
+                DirectionsDisplay.setDirections(response);
+                console.log(response.routes.length);
+                console.log(response.routes[0].legs[0].distance.text);
+                console.log(response.routes[0].legs[0].duration.text);
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        });
+    }
+
+    // onMapClicked(mapProps, map, clickEvent){
+    //     debugger;
+    // }
+
+    // centerMoved(mapProps, map) {
+    //     debugger;
+    // }
+
   render() {
     return (
-      <Map google={this.props.google} zoom={14}>
+      <Map
+        google={this.props.google}
+        zoom={14}
+        initialCenter={{
+            lat: 49.2606,
+            lng: -123.2460
+        }}
+        onClick={this.onMapClicked}
+        onReady={this.onReady}
+      >
  
-        <Marker onClick={this.onMarkerClick}
-                name={'Current location'} />
+        {/* <Marker onClick={this.onMarkerClick}
+                name={'Current location'} /> */}
  
         <InfoWindow onClose={this.onInfoWindowClose}>
-            <div>
-              <h1>Hi this is Map</h1>
-            </div>
+        <div></div>
         </InfoWindow>
       </Map>
     );
