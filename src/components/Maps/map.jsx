@@ -9,14 +9,16 @@ export class MapContainer extends React.Component {
     //  - walking
 
     onReady(mapProps, map) {
+        const origin = this.props.origin;
+        const destination = this.props.destination;
         const {google} = mapProps;
         const DirectionsService = new google.maps.DirectionsService();
         const DirectionsDisplay = new google.maps.DirectionsRenderer();
         DirectionsDisplay.setMap(map);
         DirectionsDisplay.setPanel(document.getElementById('DirectionsPanel'));
         DirectionsService.route({
-            origin: 'UBC',
-            destination: 'SFU',
+            origin: origin,
+            destination: destination,
             travelMode: 'TRANSIT',
             provideRouteAlternatives: true,
             transitOptions: {
@@ -48,7 +50,7 @@ export class MapContainer extends React.Component {
                     footprint: carbonEmissionInKg
                 };
                 console.log(`${footprintInfo.footprint}kg`);
-                debugger;
+                // debugger;
             } else {
                 window.alert('Directions request failed due to ' + status);
             }
@@ -73,7 +75,7 @@ export class MapContainer extends React.Component {
             lng: -123.2460
         }}
         onClick={this.onMapClicked}
-        onReady={this.onReady}
+        onReady={this.onReady.bind(this)}
       >
  
         {/* <Marker onClick={this.onMarkerClick}
