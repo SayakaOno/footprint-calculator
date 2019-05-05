@@ -6,7 +6,7 @@ import Trivia from './Trivia';
 import './app.css';
 
 class App extends React.Component {
-  state = { currentLocation: '', destination: '', transportation: '' };
+  state = { currentLocation: '', destination: '', transportation: 'driving' };
 
   componentDidMount = () => {
     if (navigator.geolocation) {
