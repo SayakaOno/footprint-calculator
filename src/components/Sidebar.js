@@ -50,9 +50,9 @@ class Sidebar extends React.Component {
         />
         <ul className='buttons'>
           <li
-            onClick={() => this.props.onClick('driving')}
+            onClick={() => this.props.onClick('DRIVING')}
             className={
-              this.props.transportation === 'driving' ? 'chosen' : null
+              this.props.transportation === 'DRIVING' ? 'chosen' : null
             }
           >
             <span>
@@ -61,9 +61,9 @@ class Sidebar extends React.Component {
             <img alt='driving' src={driving} />
           </li>
           <li
-            onClick={() => this.props.onClick('transit')}
+            onClick={() => this.props.onClick('TRANSIT')}
             className={
-              this.props.transportation === 'transit' ? 'chosen' : null
+              this.props.transportation === 'TRANSIT' ? 'chosen' : null
             }
           >
             <span>
@@ -72,8 +72,8 @@ class Sidebar extends React.Component {
             <img alt='transit' src={transit} />
           </li>
           <li
-            onClick={() => this.props.onClick('biking')}
-            className={this.props.transportation === 'biking' ? 'chosen' : null}
+            onClick={() => this.props.onClick('BICYCLING')}
+            className={this.props.transportation === 'BICYCLING' ? 'chosen' : null}
           >
             <span>
               <img alt='' src={biking_icon} />
@@ -81,9 +81,9 @@ class Sidebar extends React.Component {
             <img alt='biking' src={biking} />
           </li>
           <li
-            onClick={() => this.props.onClick('walking')}
+            onClick={() => this.props.onClick('WALKING')}
             className={
-              this.props.transportation === 'walking' ? 'chosen' : null
+              this.props.transportation === 'WALKING' ? 'chosen' : null
             }
           >
             <span>
