@@ -11,10 +11,6 @@ import walking_icon from '../images/walking_icon.png';
 import title from '../images/title.png';
 
 class Sidebar extends React.Component {
-  state = {
-    distination: null
-  };
-
   onButtonClick = () => {
     console.log('clicked');
   };
@@ -48,6 +44,38 @@ class Sidebar extends React.Component {
           onChange={e => this.handleInput(e, 'destination')}
           placeholder='ending point'
         />
+        <select
+          id='option'
+          name='option'
+          type='text'
+          value={this.props.option}
+          onChange={e => this.handleInput(e, 'option')}
+        >
+          <option value='departure_time'>leave by</option>
+          <option value='arrival_time'>arrive by</option>
+        </select>
+        <select
+          id='time'
+          name='time'
+          type='text'
+          value={this.props.time}
+          onChange={e => this.handleInput(e, 'time')}
+        >
+          <option value='08:00:00'>8:00</option>
+          <option value='08:30:00'>8:30</option>
+          <option value='09:00:00'>9:00</option>
+        </select>
+        <select
+          id='date'
+          name='date'
+          type='text'
+          value={this.props.date}
+          onChange={e => this.handleInput(e, 'date')}
+        >
+          <option value='May 5, 2019'>May 5, 2019</option>
+          <option value='May 6, 2019'>May 6, 2019</option>
+          <option value='May 7, 2019'>May 7, 2019</option>
+        </select>
         <ul className='buttons'>
           <li
             onClick={() => this.props.onClick('driving')}

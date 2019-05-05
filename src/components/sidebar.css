@@ -65,6 +65,18 @@
   margin-bottom: 10px;
   padding: 5px;
 }
+.sidebar #option {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.sidebar #time {
+  width: 49%;
+  margin: 0 2% 10px 0;
+}
+.sidebar #date {
+  width: 49%;
+  margin-bottom: 10px;
+}
 
 /* Map results */
 .sidebar .adp-listheader {
@@ -72,14 +84,16 @@
 }
 .sidebar .adp-list {
   padding: 0;
+  border: none;
 }
 .sidebar .adp-list ol {
-  background-color: #e6e7e8;
   overflow: hidden;
+  border: none !important;
 }
 .sidebar .adp-list ol li {
   margin-bottom: 10px;
-  background-color: #fff;
+  background-color: #e6e7e8;
+  /* background-color: #fff; */
   padding: 10px !important;
 }
 .adp-warnbox {

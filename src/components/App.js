@@ -6,7 +6,14 @@ import Trivia from './Trivia';
 import './app.css';
 
 class App extends React.Component {
-  state = { currentLocation: '', destination: '', transportation: 'driving' };
+  state = {
+    currentLocation: '',
+    destination: '',
+    transportation: '',
+    option: 'departure_time',
+    time: '',
+    date: ''
+  };
 
   componentDidMount = () => {
     if (navigator.geolocation) {
@@ -20,6 +27,10 @@ class App extends React.Component {
         position.coords.longitude
       }`
     });
+  };
+
+  getTime = () => {
+    return new Date(this.state.date + ' ' + this.state.time);
   };
 
   render() {
@@ -40,6 +51,8 @@ class App extends React.Component {
               origin={this.state.currentLocation}
               destination={this.state.destination}
               travelMode={this.state.transportation}
+              option={this.state.option}
+              time={this.state.time && this.state.date ? this.getTime() : null}
             >
               Maps
             </Maps>
