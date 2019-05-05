@@ -18,8 +18,12 @@ class App extends React.Component {
     this.setState({
       currentLocation: `${position.coords.latitude},${
         position.coords.longitude
-      }`
+        }`
     });
+  };
+
+  setEmittedCO2 = amount => {
+    this.setState({ amount });
   };
 
   render() {
@@ -40,12 +44,16 @@ class App extends React.Component {
               origin={this.state.currentLocation}
               destination={this.state.destination}
               travelMode={this.state.transportation}
+              setEmittedCO2={this.setEmittedCO2}
             >
               Maps
             </Maps>
           </div>
         </div>
-        <Trivia />
+        <Trivia
+          travelMode={this.state.transportation}
+          amount={this.state.amount}
+        />
       </div>
     );
   }

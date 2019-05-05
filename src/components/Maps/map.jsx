@@ -62,6 +62,7 @@ export class MapContainer extends React.Component {
                 }
 
                 console.log(bestRoute);
+                this.props.setEmittedCO2(bestRoute.footprint);
                 DirectionsDisplay.setDirections(bestRoute.response);
                 // window.alert(`${bestRoute.travelMode}: footprint: ${bestRoute.footprint}kg`);
             });
@@ -204,10 +205,10 @@ export class MapContainer extends React.Component {
     render() {
         if (this.state.shouldUpdate) {
             console.log("Should update! Travel mode is " + this.state.travelMode);
-            debugger;
             var responsePromise = this.getFootprint(this.directionsService, this.props.origin, this.props.destination, this.state.travelMode, this.props.setEmittedCO2);
-
+            this.setState({shouldUpdate: false});
             responsePromise.then(promise => {
+                this.props.setEmittedCO2(promise.footprint);
                 this.directionsDisplay.setDirections(promise.response);
             })
         }
