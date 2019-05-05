@@ -1,14 +1,9 @@
 import React from 'react';
-import { slide as Menu } from 'react-burger-menu';
 import './sidebar.css';
 
 class Sidebar extends React.Component {
   state = {
     distination: null
-  };
-
-  handleInput = (event, fieldName) => {
-    this.props.onChange(fieldName, event.target.value);
   };
 
   onButtonClick = () => {
@@ -17,7 +12,7 @@ class Sidebar extends React.Component {
 
   render() {
     return (
-      <Menu pageWrapId={'page-wrap'} outerContainerId={'outer-container'}>
+      <div className='sidebar bm-menu'>
         <input
           name='currentLocation'
           type='text'
@@ -44,7 +39,8 @@ class Sidebar extends React.Component {
             <img alt='walk' src='' />
           </li>
         </ul>
-      </Menu>
+        <div id='DirectionsPanel' />
+      </div>
     );
   }
 }
