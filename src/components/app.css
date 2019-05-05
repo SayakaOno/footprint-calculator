@@ -10,3 +10,6 @@
 .map > div > div {
   width: calc(100% - 420px) !important;
 }
+html {
+  font-family: Roboto, Arial, sans-serif;
+}
