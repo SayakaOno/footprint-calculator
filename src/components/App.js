@@ -11,8 +11,8 @@ class App extends React.Component {
     destination: '',
     transportation: '',
     option: 'departure_time',
-    time: '',
-    date: ''
+    time: '08:00:00',
+    date: 'May 5, 2019'
   };
 
   componentDidMount = () => {
