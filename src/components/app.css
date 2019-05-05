@@ -5,4 +5,8 @@
 }
 .map {
   height: 100vh;
+  overflow: hidden;
+}
+.map > div > div {
+  width: calc(100% - 420px) !important;
 }

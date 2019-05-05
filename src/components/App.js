@@ -25,7 +25,6 @@ class App extends React.Component {
   render() {
     return (
       <div id='outer-container' className='app'>
-        <h1>Carbon Footprint Calculator</h1>
         <div className='container'>
           <Sidebar
             onChange={(fieldName, destination) =>

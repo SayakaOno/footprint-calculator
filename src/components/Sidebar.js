@@ -13,17 +13,25 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div className='sidebar bm-menu'>
+        <h1>Carbon Footprint Calculator</h1>
+        <label htmlFor='currentLocation'>A</label>
         <input
+          id='currentLocation'
           name='currentLocation'
           type='text'
           value={this.props.currentLocation}
           onChange={e => this.handleInput(e, 'currentLocation')}
+          placeholder='starting point'
         />
+        <br />
+        <label htmlFor='destination'>B</label>
         <input
+          id='destination'
           name='destination'
           type='text'
           value={this.props.destination}
           onChange={e => this.handleInput(e, 'destination')}
+          placeholder='ending point'
         />
         <ul className='buttons'>
           <li onClick={() => this.props.onClick('car')}>

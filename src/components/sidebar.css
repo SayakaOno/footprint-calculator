@@ -40,7 +40,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* General sidebar styles */
 .bm-menu {
   /* background: #373a47; */
-  background: lightcoral;
+  background: lightgrey;
   /* padding: 2.5em 1.5em 0; */
   font-size: 1.15em;
 }
@@ -69,6 +69,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .buttons {
   display: flex !important;
   padding: 0;
+  margin: 20px 0;
 }
 .buttons li {
   width: 25%;
@@ -77,12 +78,61 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 @media only screen and (min-width: 500px) {
   .sidebar {
-    width: 300px;
+    width: 380px;
+    height: calc(100vh - 40px);
+    overflow: scroll;
+    padding: 20px;
   }
   .bm-cross-button {
     display: none;
   }
 }
-.sidebar {
-  height: 100vh;
+.sidebar label {
+  display: inline-block;
+  width: 40px;
+  height: calc(34px - 7px);
+  border-radius: 6px 0 0 6px;
+  text-align: center;
+  vertical-align: top;
+  padding-top: 7px;
+  background-color: green;
+}
+.sidebar input {
+  display: inline-block;
+  width: calc(100% - 54px);
+  border-radius: 0 6px 6px 0;
+  box-shadow: none;
+  border: 1px grey solid;
+  border-left: none;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+/* Map results */
+.sidebar .adp-listheader {
+  display: none;
+}
+.sidebar .adp-list {
+  padding: 0;
+}
+.sidebar .adp-list ol {
+  background-color: lightgrey;
+  overflow: hidden;
+}
+.sidebar .adp-list ol li {
+  margin-bottom: 10px;
+  background-color: #fff;
+  padding: 10px !important;
+}
+.adp-warnbox {
+  display: none;
+}
+.adp {
+  background-color: #fff;
+}
+.adp-agencies {
+  display: none;
+}
+.adp-legal {
+  display: none;
 }
