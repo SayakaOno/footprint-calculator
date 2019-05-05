@@ -2,6 +2,7 @@ import React from 'react';
 import Sidebar from './Sidebar';
 import './reset.css';
 import Maps from './Maps/map';
+import Trivia from './Trivia';
 
 class App extends React.Component {
   state = { currentLocation: '', destination: '', transportation: '' };
@@ -22,6 +23,7 @@ class App extends React.Component {
         />
         <h1>Carbon Footprint Calculator</h1>
         <Maps origin='UBC' destination='University of Victoria'>Maps</Maps>
+        <Trivia />
       </div>
     );
   }
