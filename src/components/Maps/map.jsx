@@ -63,7 +63,7 @@ export class MapContainer extends React.Component {
 
                 console.log(bestRoute);
                 DirectionsDisplay.setDirections(bestRoute.response);
-                window.alert(`${bestRoute.travelMode}: footprint: ${bestRoute.footprint}kg`);
+                // window.alert(`${bestRoute.travelMode}: footprint: ${bestRoute.footprint}kg`);
             });
 
         // function getFootprint(travelMode) {
@@ -177,7 +177,7 @@ export class MapContainer extends React.Component {
 
                     resolve(footprintInfo);
                 } else {
-                    window.alert('Directions request failed due to ' + status);
+                    // window.alert('Directions request failed due to ' + status);
                     reject('Directions request failed due to ' + status);
                 }
             });
