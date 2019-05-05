@@ -15,10 +15,6 @@ class Sidebar extends React.Component {
     distination: null
   };
 
-  handleInput = (event, fieldName) => {
-    this.props.onChange(fieldName, event.target.value);
-  };
-
   onButtonClick = () => {
     console.log('clicked');
   };
