@@ -74,3 +74,15 @@ Note: Beware of modifying this element as it can break the animations - you shou
   width: 25%;
   list-style: none;
 }
+
+@media only screen and (min-width: 500px) {
+  .sidebar {
+    width: 300px;
+  }
+  .bm-cross-button {
+    display: none;
+  }
+}
+.sidebar {
+  height: 100vh;
+}
