@@ -49,25 +49,43 @@ class Sidebar extends React.Component {
           placeholder='ending point'
         />
         <ul className='buttons'>
-          <li onClick={() => this.props.onClick('driving')}>
+          <li
+            onClick={() => this.props.onClick('driving')}
+            className={
+              this.props.transportation === 'driving' ? 'chosen' : null
+            }
+          >
             <span>
               <img alt='' src={driving_icon} />
             </span>
             <img alt='driving' src={driving} />
           </li>
-          <li onClick={() => this.props.onClick('transit')}>
+          <li
+            onClick={() => this.props.onClick('transit')}
+            className={
+              this.props.transportation === 'transit' ? 'chosen' : null
+            }
+          >
             <span>
               <img alt='' src={transit_icon} />
             </span>
             <img alt='transit' src={transit} />
           </li>
-          <li onClick={() => this.props.onClick('biking')}>
+          <li
+            onClick={() => this.props.onClick('biking')}
+            className={this.props.transportation === 'biking' ? 'chosen' : null}
+          >
             <span>
               <img alt='' src={biking_icon} />
             </span>
             <img alt='biking' src={biking} />
           </li>
-          <li onClick={() => this.props.onClick('walking')}>
+          <li
+            onClick={() => this.props.onClick('walking')}
+            className={
+              this.props.transportation === 'walking' ? 'chosen' : null
+            }
+          >
             <span>
               <img alt='' src={walking_icon} />
             </span>
