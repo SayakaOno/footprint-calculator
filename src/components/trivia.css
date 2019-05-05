@@ -3,12 +3,14 @@
   bottom: 20px;
   right: 60px;
   width: 280px;
-  height: 60px;
+  height: fit-content;
   border-radius: 30px;
   border: solid 1px green;
   background-color: #fff;
   padding: 30px 120px 30px 30px;
-  /* background-image: url(); */
+  background-image: url('../images/trivia.png');
+  background-repeat: no-repeat;
+  background-position: right;
 }
 .trivia h2 {
   color: green;
