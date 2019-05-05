@@ -10,6 +10,10 @@ class Sidebar extends React.Component {
     console.log('clicked');
   };
 
+  handleInput = (event, fieldName) => {
+    this.props.onChange(fieldName, event.target.value);
+  };
+
   render() {
     return (
       <div className='sidebar bm-menu'>
