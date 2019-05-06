@@ -188,12 +188,12 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 @media only screen and (min-width: 500px) {
   .sidebar {
-    width: 300px;
+    width: 380px;
   }
   .bm-cross-button {
     display: none;
   }
 }
 .sidebar {
-  height: 100vh;
+  height: calc(100vh - 40px);
 }
