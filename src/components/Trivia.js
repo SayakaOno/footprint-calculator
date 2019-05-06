@@ -34,7 +34,6 @@ class Trivia extends React.Component {
     this.setState({ number: Math.floor(Math.random() * trivias.length) });
   }
   render() {
-    console.log(this.props);
     return (
       <div className='trivia'>
         <h2>DID YOU KNOW?</h2>
