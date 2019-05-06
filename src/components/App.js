@@ -7,18 +7,27 @@ import './app.css';
 
 class App extends React.Component {
   state = {
+    initialCenter: {},
     currentLocation: '',
     destination: '',
     transportation: '',
-    option: 'departure_time',
+    option: 'departureTime',
     time: '08:00:00',
     date: 'May 5, 2019',
-    amount: null
+    amount: null,
+    shouldUpdateMap: false
   };
 
   componentDidMount = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.showPosition);
+    } else {
+      this.setState({
+        initialCenter: {
+          lat: 49.2606,
+          lng: -123.246
+        }
+      });
     }
   };
 
@@ -26,7 +35,11 @@ class App extends React.Component {
     this.setState({
       currentLocation: `${position.coords.latitude},${
         position.coords.longitude
-      }`
+      }`,
+      initialCenter: {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      }
     });
   };
 
@@ -50,18 +63,33 @@ class App extends React.Component {
             currentLocation={this.state.currentLocation}
             destination={this.state.destination}
             transportation={this.state.transportation}
+            setShouldUpdateMap={bool =>
+              this.setState({ shouldUpdateMap: bool })
+            }
           />
           <div className='map'>
-            <Maps
-              origin={this.state.currentLocation}
-              destination={this.state.destination}
-              travelMode={this.state.transportation}
-              option={this.state.option}
-              time={this.state.time && this.state.date ? this.getTime() : null}
-              setEmittedCO2={this.setEmittedCO2}
-            >
-              Maps
-            </Maps>
+            {this.state.initialCenter ? (
+              <Maps
+                initialCenter={this.state.initialCenter}
+                origin={this.state.currentLocation}
+                destination={this.state.destination}
+                travelMode={this.state.transportation}
+                option={this.state.option}
+                time={
+                  this.state.time && this.state.date ? this.getTime() : null
+                }
+                setEmittedCO2={this.setEmittedCO2}
+                setShouldUpdateMap={bool =>
+                  this.setState({ shouldUpdateMap: bool })
+                }
+                shouldUpdateMap={this.state.shouldUpdateMap}
+                setTravelMode={travelMode =>
+                  this.setState({ transportation: travelMode })
+                }
+              >
+                Maps
+              </Maps>
+            ) : null}
           </div>
         </div>
         <Trivia

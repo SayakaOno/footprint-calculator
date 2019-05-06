@@ -11,12 +11,24 @@ import walking_icon from '../images/walking_icon.png';
 import title from '../images/title.png';
 
 class Sidebar extends React.Component {
-  onButtonClick = () => {
-    console.log('clicked');
-  };
-
   handleInput = (event, fieldName) => {
     this.props.onChange(fieldName, event.target.value);
+    if (
+      this.props.transportation &&
+      (event.target.tagName === 'SELECT' ||
+        (event.target.tagName === 'INPUT' && event.keyName === 'ENTER'))
+    ) {
+      this.props.setShouldUpdateMap(true);
+    }
+  };
+  onEnterHit = event => {
+    if (event.key === 'Enter') {
+      // this.props.renderMap();
+    }
+  };
+  handleTransportation = travelMode => {
+    this.props.setShouldUpdateMap(true);
+    this.props.onClick(travelMode);
   };
 
   render() {
@@ -32,6 +44,7 @@ class Sidebar extends React.Component {
           type='text'
           value={this.props.currentLocation}
           onChange={e => this.handleInput(e, 'currentLocation')}
+          onKeyDown={this.onEnterHit}
           placeholder='starting point'
         />
         <br />
@@ -42,6 +55,7 @@ class Sidebar extends React.Component {
           type='text'
           value={this.props.destination}
           onChange={e => this.handleInput(e, 'destination')}
+          onKeyDown={this.onEnterHit}
           placeholder='ending point'
         />
         <select
@@ -51,8 +65,8 @@ class Sidebar extends React.Component {
           value={this.props.option}
           onChange={e => this.handleInput(e, 'option')}
         >
-          <option value='departure_time'>leave by</option>
-          <option value='arrival_time'>arrive by</option>
+          <option value='departureTime'>leave by</option>
+          <option value='arrivalTime'>arrive by</option>
         </select>
         <select
           id='time'
@@ -78,7 +92,7 @@ class Sidebar extends React.Component {
         </select>
         <ul className='buttons'>
           <li
-            onClick={() => this.props.onClick('DRIVING')}
+            onClick={() => this.handleTransportation('DRIVING')}
             className={
               this.props.transportation === 'DRIVING' ? 'chosen' : null
             }
@@ -89,7 +103,7 @@ class Sidebar extends React.Component {
             <img alt='driving' src={driving} />
           </li>
           <li
-            onClick={() => this.props.onClick('TRANSIT')}
+            onClick={() => this.handleTransportation('TRANSIT')}
             className={
               this.props.transportation === 'TRANSIT' ? 'chosen' : null
             }
@@ -100,7 +114,7 @@ class Sidebar extends React.Component {
             <img alt='transit' src={transit} />
           </li>
           <li
-            onClick={() => this.props.onClick('BICYCLING')}
+            onClick={() => this.handleTransportation('BICYCLING')}
             className={
               this.props.transportation === 'BICYCLING' ? 'chosen' : null
             }
@@ -111,7 +125,7 @@ class Sidebar extends React.Component {
             <img alt='biking' src={biking} />
           </li>
           <li
-            onClick={() => this.props.onClick('WALKING')}
+            onClick={() => this.handleTransportation('WALKING')}
             className={
               this.props.transportation === 'WALKING' ? 'chosen' : null
             }
