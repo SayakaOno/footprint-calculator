@@ -15,48 +15,47 @@ export class MapContainer extends React.Component {
       travelMode: props.travelMode
       //   shouldUpdate: false
     };
+    this.google = this.props.google;
+    this.directionsService = new this.google.maps.DirectionsService();
   }
 
-  onMapClicked(mapProps) {
-    const { google } = mapProps;
+  onMapClicked() {
     const origin = this.props.origin;
     const destination = this.props.destination;
     const setCO2 = this.props.setEmittedCO2;
     if (!destination || !origin) {
       return;
     }
-    const DirectionsService = new google.maps.DirectionsService();
-    this.directionsService = DirectionsService;
     const DirectionsDisplay = this.directionsDisplay;
 
     var footprintPromises = [
       this.getFootprint(
-        DirectionsService,
+        this.directionsService,
         origin,
         destination,
-        'TRANSIT',
-        setCO2
+        'TRANSIT'
+        // setCO2
       ),
       this.getFootprint(
-        DirectionsService,
+        this.directionsService,
         origin,
         destination,
-        'DRIVING',
-        setCO2
+        'DRIVING'
+        // setCO2
       ),
       this.getFootprint(
-        DirectionsService,
+        this.directionsService,
         origin,
         destination,
-        'WALKING',
-        setCO2
+        'WALKING'
+        // setCO2
       ),
       this.getFootprint(
-        DirectionsService,
+        this.directionsService,
         origin,
         destination,
-        'BICYCLING',
-        setCO2
+        'BICYCLING'
+        // setCO2
       )
     ];
 
@@ -152,12 +151,34 @@ export class MapContainer extends React.Component {
     // }
   }
 
+  renderMapWithTMode = (travelMode = this.props.travelMode, option, time) => {
+    console.log('Should update! Travel mode is ' + travelMode);
+
+    var responsePromise = this.getFootprint(
+      this.directionsService,
+      this.props.origin,
+      this.props.destination,
+      //   this.props.setEmittedCO2,
+      travelMode,
+      option,
+      time
+    );
+    this.setState({ shouldUpdate: false });
+    this.props.setShouldUpdateMap(false);
+    responsePromise.then(promise => {
+      this.props.setEmittedCO2(promise.footprint);
+      this.directionsDisplay.setDirections(promise.response);
+    });
+  };
+
   getFootprint(
     DirectionsService,
     origin,
     destination,
     travelMode,
-    setEmission
+    // setEmission,
+    option = 'departureTime',
+    time = new Date()
   ) {
     return new Promise((resolve, reject) => {
       DirectionsService.route(
@@ -167,7 +188,7 @@ export class MapContainer extends React.Component {
           travelMode: travelMode,
           provideRouteAlternatives: true,
           transitOptions: {
-            [this.props.option]: this.props.time
+            [option]: time
             // departureTime: new Date()
           }
         },
@@ -228,40 +249,28 @@ export class MapContainer extends React.Component {
   }
 
   onReady(mapProps, map) {
-    const { google } = mapProps;
-    const DirectionsDisplay = new google.maps.DirectionsRenderer();
+    const DirectionsDisplay = new this.google.maps.DirectionsRenderer();
     DirectionsDisplay.setMap(map);
     DirectionsDisplay.setPanel(document.getElementById('DirectionsPanel'));
 
     this['directionsDisplay'] = DirectionsDisplay;
+    this.props.setRenderMapFunc(() => this.onMapClicked());
+    this.props.setRenderMapFuncWithTMode(this.renderMapWithTMode);
   }
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.travelMode !== state.travelMode) {
-      return Object.assign({}, props, { shouldUpdate: true });
-    }
+  //   static getDerivedStateFromProps(props, state) {
+  //     if (props.travelMode !== state.travelMode) {
+  //       return Object.assign({}, props, { shouldUpdate: true });
+  //     }
 
-    return props;
-  }
+  //     return props;
+  //   }
 
   render() {
     // if (this.state.shouldUpdate) {
-    if (this.props.shouldUpdateMap) {
-      console.log('Should update! Travel mode is ' + this.state.travelMode);
-      var responsePromise = this.getFootprint(
-        this.directionsService,
-        this.props.origin,
-        this.props.destination,
-        this.state.travelMode,
-        this.props.setEmittedCO2
-      );
-      this.setState({ shouldUpdate: false });
-      this.props.setShouldUpdateMap(false);
-      responsePromise.then(promise => {
-        this.props.setEmittedCO2(promise.footprint);
-        this.directionsDisplay.setDirections(promise.response);
-      });
-    }
+    // if (this.props.shouldUpdateMap) {
+    //   this.renderMapwithTMode();
+    // }
     return (
       <Map
         google={this.props.google}

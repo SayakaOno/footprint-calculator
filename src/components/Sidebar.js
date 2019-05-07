@@ -11,24 +11,78 @@ import walking_icon from '../images/walking_icon.png';
 import title from '../images/title.png';
 
 class Sidebar extends React.Component {
-  handleInput = (event, fieldName) => {
-    this.props.onChange(fieldName, event.target.value);
+  state = {
+    option: 'departureTime',
+    time: '08:00:00',
+    date: 'May 5, 2019'
+  };
+
+  shouldRenderMap = event => {
     if (
       this.props.transportation &&
+      this.props.currentLocation &&
+      this.props.destination &&
       (event.target.tagName === 'SELECT' ||
         (event.target.tagName === 'INPUT' && event.keyName === 'ENTER'))
     ) {
-      this.props.setShouldUpdateMap(true);
+      return true;
+    }
+    return false;
+  };
+
+  handleInput = (event, fieldName) => {
+    this.props.onChange(fieldName, event.target.value);
+
+    if (event.target.tagName === 'SELECT') {
+      this.setState({ [event.target.name]: event.target.value });
+      if (this.shouldRenderMap(event)) {
+        this.props.renderMapWithTMode(
+          this.props.travelMode,
+          event.target.name === 'option'
+            ? event.target.value
+            : this.state.option,
+          this.getTime(
+            event.target.name === 'date' ? event.target.value : this.state.date,
+            event.target.name === 'time' ? event.target.value : this.state.time
+          )
+        );
+      } else if (this.props.currentLocation && this.props.destination) {
+        this.props.renderMap();
+      }
     }
   };
+
   onEnterHit = event => {
     if (event.key === 'Enter') {
-      // this.props.renderMap();
+      if (
+        this.props.transportation &&
+        this.props.currentLocation &&
+        this.props.destination
+      ) {
+        this.props.renderMapWithTMode(
+          this.props.travelMode,
+          this.state.option,
+          this.getTime(this.state.date, this.state.time)
+        );
+      } else if (this.props.currentLocation && this.props.destination) {
+        this.props.renderMap();
+      }
     }
   };
+
   handleTransportation = travelMode => {
-    this.props.setShouldUpdateMap(true);
     this.props.onClick(travelMode);
+    if (this.props.currentLocation && this.props.destination) {
+      this.props.renderMapWithTMode(
+        travelMode,
+        this.state.option,
+        this.getTime(this.state.date, this.state.time)
+      );
+    }
+  };
+
+  getTime = (date, time) => {
+    return new Date(date + ' ' + time);
   };
 
   render() {
@@ -62,7 +116,7 @@ class Sidebar extends React.Component {
           id='option'
           name='option'
           type='text'
-          value={this.props.option}
+          value={this.state.option}
           onChange={e => this.handleInput(e, 'option')}
         >
           <option value='departureTime'>leave by</option>
@@ -72,7 +126,7 @@ class Sidebar extends React.Component {
           id='time'
           name='time'
           type='text'
-          value={this.props.time}
+          value={this.state.time}
           onChange={e => this.handleInput(e, 'time')}
         >
           <option value='08:00:00'>8:00</option>
@@ -83,7 +137,7 @@ class Sidebar extends React.Component {
           id='date'
           name='date'
           type='text'
-          value={this.props.date}
+          value={this.state.date}
           onChange={e => this.handleInput(e, 'date')}
         >
           <option value='May 5, 2019'>May 5, 2019</option>

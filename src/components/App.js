@@ -7,18 +7,18 @@ import './app.css';
 
 class App extends React.Component {
   state = {
-    initialCenter: {},
+    initialCenter: null,
     currentLocation: '',
     destination: '',
     transportation: '',
-    option: 'departureTime',
-    time: '08:00:00',
-    date: 'May 5, 2019',
     amount: null,
-    shouldUpdateMap: false
+    renderMap: null,
+    renderMapWithTMode: null
   };
 
   componentDidMount = () => {
+    this.setState({ renderMap: null, renderaMapWithtravelMode: null });
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.showPosition);
     } else {
@@ -43,10 +43,6 @@ class App extends React.Component {
     });
   };
 
-  getTime = () => {
-    return new Date(this.state.date + ' ' + this.state.time);
-  };
-
   setEmittedCO2 = amount => {
     this.setState({ amount });
   };
@@ -63,9 +59,8 @@ class App extends React.Component {
             currentLocation={this.state.currentLocation}
             destination={this.state.destination}
             transportation={this.state.transportation}
-            setShouldUpdateMap={bool =>
-              this.setState({ shouldUpdateMap: bool })
-            }
+            renderMap={this.state.renderMap}
+            renderMapWithTMode={this.state.renderMapWithTMode}
           />
           <div className='map'>
             {this.state.initialCenter ? (
@@ -74,10 +69,6 @@ class App extends React.Component {
                 origin={this.state.currentLocation}
                 destination={this.state.destination}
                 travelMode={this.state.transportation}
-                option={this.state.option}
-                time={
-                  this.state.time && this.state.date ? this.getTime() : null
-                }
                 setEmittedCO2={this.setEmittedCO2}
                 setShouldUpdateMap={bool =>
                   this.setState({ shouldUpdateMap: bool })
@@ -85,6 +76,10 @@ class App extends React.Component {
                 shouldUpdateMap={this.state.shouldUpdateMap}
                 setTravelMode={travelMode =>
                   this.setState({ transportation: travelMode })
+                }
+                setRenderMapFunc={func => this.setState({ renderMap: func })}
+                setRenderMapFuncWithTMode={func =>
+                  this.setState({ renderMapWithTMode: func })
                 }
               >
                 Maps
