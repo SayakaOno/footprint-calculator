@@ -70,6 +70,14 @@ class App extends React.Component {
             renderMapWithTMode={this.state.renderMapWithTMode}
           />
           <div className='map'>
+            {(this.state.transportation === 'DRIVING' ||
+              this.state.transportation === 'TRANSIT') &&
+            this.state.amount ? (
+              <p className='map_emission'>
+                Your {this.state.transportation} has emitted $
+                {this.state.amount} kg of CO2.
+              </p>
+            ) : null}
             {this.state.initialCenter ? (
               <Maps
                 initialCenter={this.state.initialCenter}

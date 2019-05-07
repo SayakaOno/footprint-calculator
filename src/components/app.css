@@ -1,15 +1,27 @@
-@media only screen and (min-width: 500px) {
-  .container {
-    display: flex;
-  }
+html {
+  font-family: Roboto, Arial, sans-serif;
 }
 .map {
   height: 100vh;
   overflow: hidden;
 }
-.map > div > div {
-  width: calc(100% - 420px) !important;
+@media only screen and (min-width: 992px) {
+  .container {
+    display: flex;
+  }
+  .map_emission {
+    display: none;
+  }
+  .map > div > div {
+    width: calc(100% - 420px) !important;
+  }
 }
-html {
-  font-family: Roboto, Arial, sans-serif;
+@media only screen and (max-width: 991px) {
+  .map_emission {
+    background-color: #00bd3e;
+    color: #fff;
+    padding: 5px 0;
+    text-align: center;
+    font-weight: bold;
+  }
 }

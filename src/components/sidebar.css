@@ -10,7 +10,7 @@
 }
 .buttons li > span {
   height: 81px;
-  display: inline-block;
+  display: block;
 }
 .buttons li:nth-child(2) {
   padding-top: 5px;
@@ -26,16 +26,31 @@
   opacity: 1;
 }
 
-@media only screen and (min-width: 500px) {
+@media only screen and (min-width: 992px) {
   .sidebar {
     width: 380px;
     height: calc(100vh - 40px);
     overflow: scroll;
-    padding: 20px;
   }
   .bm-cross-button {
     display: none;
   }
+}
+@media only screen and (max-width: 991px) {
+  .sidebar {
+    margin: 0 auto;
+  }
+  .sidebar h1 {
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  .adp {
+    display: none;
+  }
+}
+.sidebar {
+  /* max-width: 380px; */
+  padding: 20px;
 }
 .sidebar h1 {
   padding-top: 20px;
@@ -184,16 +199,4 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .buttons li {
   width: 25%;
   list-style: none;
-}
-
-@media only screen and (min-width: 500px) {
-  .sidebar {
-    width: 380px;
-  }
-  .bm-cross-button {
-    display: none;
-  }
-}
-.sidebar {
-  height: calc(100vh - 40px);
 }
