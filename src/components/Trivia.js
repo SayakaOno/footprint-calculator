@@ -38,14 +38,15 @@ class Trivia extends React.Component {
       <div className='trivia'>
         <h2>DID YOU KNOW?</h2>
         <p className='trivia_container'>
-          {this.state.number ? trivias[this.state.number].trivia : null}{' '}
+          {trivias[0].trivia}
+          {/* {this.state.number ? trivias[this.state.number].trivia : null}{' '}
           <a href={this.state.number ? trivias[this.state.number].link : null}>
             Learn more
-          </a>
+          </a> */}
         </p>
         {this.props.amount && this.props.travelMode ? (
           <p className='emission'>
-            Your {this.props.travelMode} has emitted {this.props.amount} lbs of
+            Your {this.props.travelMode} has emitted {this.props.amount} kg of
             CO2.
           </p>
         ) : null}
