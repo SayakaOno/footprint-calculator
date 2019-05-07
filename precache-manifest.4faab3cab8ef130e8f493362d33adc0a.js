@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b4d31a161510db4cba1f2f63053b4607",
+    "revision": "2e0f9f7fdaae00f2873c7fbfb09bd613",
     "url": "/footprint-calculator/index.html"
   },
   {
-    "revision": "4131030eafb1ceb524ad",
+    "revision": "ed6878bc9d0e8d6831d2",
     "url": "/footprint-calculator/static/css/main.e5c6ead2.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/footprint-calculator/static/js/2.db396bbf.chunk.js"
   },
   {
-    "revision": "4131030eafb1ceb524ad",
-    "url": "/footprint-calculator/static/js/main.2f5ef220.chunk.js"
+    "revision": "ed6878bc9d0e8d6831d2",
+    "url": "/footprint-calculator/static/js/main.b51b7f4a.chunk.js"
   },
   {
     "revision": "12503d7573be13c436bc",
