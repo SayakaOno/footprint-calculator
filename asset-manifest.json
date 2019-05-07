@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/footprint-calculator/static/css/main.1feed7f2.chunk.css",
+    "main.css": "/footprint-calculator/static/css/main.e282010a.chunk.css",
     "main.js": "/footprint-calculator/static/js/main.a966e89b.chunk.js",
     "main.js.map": "/footprint-calculator/static/js/main.a966e89b.chunk.js.map",
     "runtime~main.js": "/footprint-calculator/static/js/runtime~main.6cfd47ed.js",
@@ -8,9 +8,9 @@
     "static/js/2.db396bbf.chunk.js": "/footprint-calculator/static/js/2.db396bbf.chunk.js",
     "static/js/2.db396bbf.chunk.js.map": "/footprint-calculator/static/js/2.db396bbf.chunk.js.map",
     "index.html": "/footprint-calculator/index.html",
-    "precache-manifest.1804051192597deaa284a39972a8048f.js": "/footprint-calculator/precache-manifest.1804051192597deaa284a39972a8048f.js",
+    "precache-manifest.71b089d6668682c9bce31bc4061bb8ec.js": "/footprint-calculator/precache-manifest.71b089d6668682c9bce31bc4061bb8ec.js",
     "service-worker.js": "/footprint-calculator/service-worker.js",
-    "static/css/main.1feed7f2.chunk.css.map": "/footprint-calculator/static/css/main.1feed7f2.chunk.css.map",
+    "static/css/main.e282010a.chunk.css.map": "/footprint-calculator/static/css/main.e282010a.chunk.css.map",
     "static/media/title.png": "/footprint-calculator/static/media/title.0dfd4533.png",
     "static/media/sidebar.css": "/footprint-calculator/static/media/title_img.563016f2.png",
     "static/media/trivia.css": "/footprint-calculator/static/media/trivia.80839407.png"
