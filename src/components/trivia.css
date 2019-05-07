@@ -44,13 +44,14 @@
 }
 @media only screen and (max-width: 575px) {
   #trivia {
-    padding: 0 20px;
+    padding: 0 10px;
   }
   .trivia {
-    width: 280px;
+    width: 75%;
     background-position: right 10px;
   }
   .trivia_container {
-    width: 200px !important;
+    width: calc(100% - 100px) !important;
+    height: fit-content !important;
   }
 }
