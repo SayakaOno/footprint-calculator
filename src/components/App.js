@@ -20,15 +20,22 @@ class App extends React.Component {
     this.setState({ renderMap: null, renderaMapWithtravelMode: null });
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.showPosition);
+      navigator.geolocation.getCurrentPosition(
+        this.showPosition,
+        this.setInitialCenter
+      );
     } else {
-      this.setState({
-        initialCenter: {
-          lat: 49.2606,
-          lng: -123.246
-        }
-      });
+      this.setInitialCenter();
     }
+  };
+
+  setInitialCenter = () => {
+    this.setState({
+      initialCenter: {
+        lat: 49.2606,
+        lng: -123.246
+      }
+    });
   };
 
   showPosition = position => {
