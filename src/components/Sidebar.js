@@ -11,11 +11,24 @@ import walking_icon from '../images/walking_icon.png';
 import title from '../images/title.png';
 
 class Sidebar extends React.Component {
-  state = {
-    option: 'departureTime',
-    time: '08:00:00',
-    date: 'May 5, 2019'
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      option: 'departureTime',
+      time: '',
+      date: ''
+    };
+    this.timeRef = React.createRef();
+    this.dateRef = React.createRef();
+  }
+
+  componentDidMount() {
+    let date = this.getCurrentDate();
+    let time = this.getDefaultTime();
+    this.setState({ time, date });
+    this.timeRef.current.innerHTML = this.renderTimeOptions();
+    this.dateRef.current.innerHTML = this.renderDateOptions();
+  }
 
   shouldRenderMap = event => {
     if (
@@ -85,6 +98,61 @@ class Sidebar extends React.Component {
     return new Date(date + ' ' + time);
   };
 
+  renderTimeOptions = () => {
+    let hour = 0;
+    let min = '00';
+    let options = '';
+
+    for (let i = 0; i < 47; i++) {
+      let time = `${hour}:${min}`;
+      let displayTime = `${hour > 12 ? hour - 12 : hour}:${min}`;
+      options += `<option value=${time}>${displayTime} ${
+        hour >= 12 ? 'PM' : 'AM'
+      }</option>`;
+      if (i % 2) {
+        min = '30';
+      } else {
+        hour += 1;
+        min = '00';
+      }
+    }
+    return options;
+  };
+
+  getDefaultTime() {
+    let now = new Date();
+    let currentHour = now.getHours();
+    let currentMin = now.getMinutes();
+    if (currentMin < 30) {
+      currentMin = 30;
+    } else {
+      currentMin = '00';
+      currentHour++;
+    }
+    return `${currentHour}:${currentMin}`;
+  }
+
+  getCurrentDate = (date = new Date()) => {
+    date = date
+      .toString()
+      .split(' ')
+      .splice(1, 3)
+      .join(' ');
+    return date;
+  };
+
+  renderDateOptions = () => {
+    let options = '';
+    let date = new Date();
+    for (let i = 0; i < 14; i++) {
+      options += `<option value="${this.getCurrentDate(
+        date
+      )}">${this.getCurrentDate(date)}</option>`;
+      date.setDate(date.getDate() + 1);
+    }
+    return options;
+  };
+
   render() {
     return (
       <div className='sidebar bm-menu'>
@@ -119,30 +187,29 @@ class Sidebar extends React.Component {
           value={this.state.option}
           onChange={e => this.handleInput(e, 'option')}
         >
-          <option value='departureTime'>leave by</option>
+          <option value='departureTime'>leave at</option>
           <option value='arrivalTime'>arrive by</option>
         </select>
         <select
+          ref={this.timeRef}
           id='time'
           name='time'
           type='text'
           value={this.state.time}
           onChange={e => this.handleInput(e, 'time')}
-        >
-          <option value='08:00:00'>8:00</option>
-          <option value='08:30:00'>8:30</option>
-          <option value='09:00:00'>9:00</option>
-        </select>
+        />
         <select
+          ref={this.dateRef}
           id='date'
           name='date'
           type='text'
           value={this.state.date}
           onChange={e => this.handleInput(e, 'date')}
         >
-          <option value='May 5, 2019'>May 5, 2019</option>
-          <option value='May 6, 2019'>May 6, 2019</option>
-          <option value='May 7, 2019'>May 7, 2019</option>
+          <option value='May 7 2019'>May 7, 2019</option>
+          <option value='May 8 2019'>May 8, 2019</option>
+          <option value='May 9 2019'>May 9, 2019</option>
+          <option value='May 10 2019'>May 10, 2019</option>
         </select>
         <ul className='buttons'>
           <li

@@ -74,8 +74,8 @@ class App extends React.Component {
               this.state.transportation === 'TRANSIT') &&
             this.state.amount ? (
               <p className='map_emission'>
-                Your {this.state.transportation} has emitted $
-                {this.state.amount} kg of CO2.
+                Your {this.state.transportation} has emitted {this.state.amount}{' '}
+                kg of CO2.
               </p>
             ) : null}
             {this.state.initialCenter ? (
