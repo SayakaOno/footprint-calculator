@@ -10,68 +10,101 @@ import transit_icon from '../images/transit_icon.png';
 import walking_icon from '../images/walking_icon.png';
 import title from '../images/title.png';
 
+const RENDERMODE = { 0: 'Initial', 1: 'Travel' };
+
 class Sidebar extends React.Component {
   state = {
-    option: 'departureTime',
+    option: 'leaveNow',
     time: '',
-    date: '',
-    leaveNow: true
+    date: ''
   };
 
-  componentDidMount() {
-    let date = this.getCurrentDate();
-    let time = this.getDefaultTime();
+  setClosestDateAndTime = () => {
+    let date = getCurrentDate();
+    let time = getDefaultTime();
     this.setState({ time, date });
-  }
-
-  shouldRenderMap = event => {
-    if (
-      this.props.transportation &&
-      this.props.currentLocation &&
-      this.props.destination &&
-      (event.target.tagName === 'SELECT' ||
-        (event.target.tagName === 'INPUT' && event.keyName === 'ENTER'))
-    ) {
-      return true;
-    }
-    return false;
   };
 
-  handleInput = (event, fieldName) => {
-    this.props.onChange(fieldName, event.target.value);
-
-    if (event.target.tagName === 'SELECT') {
-      this.setState({ [event.target.name]: event.target.value });
-      if (this.shouldRenderMap(event)) {
-        this.props.renderMapWithTMode(
-          this.props.travelMode,
-          event.target.name === 'option'
-            ? event.target.value
-            : this.state.option,
-          this.getTime(
-            event.target.name === 'date' ? event.target.value : this.state.date,
-            event.target.name === 'time' ? event.target.value : this.state.time
-          )
-        );
-      } else if (this.props.currentLocation && this.props.destination) {
-        this.props.renderMap();
+  renderMode = (event = null) => {
+    if (
+      event &&
+      !(
+        event.target.tagName === 'SELECT' ||
+        (event.target.tagName === 'INPUT' && event.keyName === 'ENTER')
+      )
+    ) {
+      return false;
+    }
+    if (this.props.destination && this.props.currentLocation) {
+      if (this.props.transportation) {
+        return RENDERMODE[1];
+      } else {
+        return RENDERMODE[0];
       }
+    } else {
+      return false;
+    }
+  };
+
+  handleInput = event => {
+    this.props.onChange(event.target.name, event.target.value);
+  };
+
+  getNewestState = (field, value) => {
+    if (field === 'option') {
+      if (this.state.option === 'leaveNow') {
+        return 'departureTime';
+      }
+      return this.state.option;
+    } else if (value === 'leaveNow') {
+      return '';
+    } else {
+      return this.state[field];
+    }
+  };
+
+  handleSelect = event => {
+    let value = event.target.value;
+    this.setState({ [event.target.name]: value });
+
+    if (value === 'leaveNow') {
+      value = 'departureTime';
+      this.setState({ date: '', time: '' });
+    } else if (
+      !this.state.date &&
+      !this.state.time &&
+      (value === 'departureTime' || value === 'arrivalTime')
+    ) {
+      this.setClosestDateAndTime();
+    }
+
+    if (this.renderMode(event) === RENDERMODE[1]) {
+      this.props.renderMapWithTMode(
+        this.props.travelMode,
+        event.target.name === 'option' ? value : this.getNewestState('option'),
+        getTime(
+          event.target.name === 'date'
+            ? value
+            : this.getNewestState('date', value),
+          event.target.name === 'time'
+            ? value
+            : this.getNewestState('time', value)
+        )
+      );
+    } else if (this.renderMode(event) === RENDERMODE[0]) {
+      this.props.renderMap();
     }
   };
 
   onEnterHit = event => {
     if (event.key === 'Enter') {
-      if (
-        this.props.transportation &&
-        this.props.currentLocation &&
-        this.props.destination
-      ) {
+      if (this.renderMode() === RENDERMODE[1]) {
         this.props.renderMapWithTMode(
           this.props.travelMode,
-          this.state.option,
-          this.getTime(this.state.date, this.state.time)
+          this.getNewestState('option', this.state.option),
+          getTime(this.state.date, this.state.time)
         );
-      } else if (this.props.currentLocation && this.props.destination) {
+      } else if (this.renderMode() === RENDERMODE[0]) {
         this.props.renderMap();
       }
     }
@@ -79,17 +112,13 @@ class Sidebar extends React.Component {
 
   handleTransportation = travelMode => {
     this.props.onClick(travelMode);
-    if (this.props.currentLocation && this.props.destination) {
+    if (this.renderMode() === RENDERMODE[1]) {
       this.props.renderMapWithTMode(
         travelMode,
-        this.state.option,
-        this.getTime(this.state.date, this.state.time)
+        this.getNewestState('option', this.state.option),
+        getTime(this.state.date, this.state.time)
       );
     }
-  };
-
-  getTime = (date, time) => {
-    return new Date(date + ' ' + time);
   };
 
   renderTimeOptions = () => {
@@ -97,7 +126,7 @@ class Sidebar extends React.Component {
     let min = '00';
     let options = [];
 
-    for (let i = 0; i < 47; i++) {
+    for (let i = 0; i < 48; i++) {
       let time = `${hour}:${min}`;
       let displayTime = `${hour > 12 ? hour - 12 : hour}:${min}`;
       options.push(
@@ -106,35 +135,13 @@ class Sidebar extends React.Component {
         </option>
       );
       if (i % 2) {
-        min = '30';
-      } else {
         hour += 1;
         min = '00';
+      } else {
+        min = '30';
       }
     }
     return <React.Fragment>{options.map(option => option)}</React.Fragment>;
-  };
-
-  getDefaultTime() {
-    let now = new Date();
-    let currentHour = now.getHours();
-    let currentMin = now.getMinutes();
-    if (currentMin < 30) {
-      currentMin = 30;
-    } else {
-      currentMin = '00';
-      currentHour++;
-    }
-    return `${currentHour}:${currentMin}`;
-  }
-
-  getCurrentDate = (date = new Date()) => {
-    date = date
-      .toString()
-      .split(' ')
-      .splice(1, 3)
-      .join(' ');
-    return date;
   };
 
   renderDateOptions = () => {
@@ -142,8 +149,8 @@ class Sidebar extends React.Component {
     let date = new Date();
     for (let i = 0; i < 14; i++) {
       options.push(
-        <option value={this.getCurrentDate(date)} key={i}>
-          {this.getCurrentDate(date)}
+        <option value={getCurrentDate(date)} key={i}>
+          {getCurrentDate(date)}
         </option>
       );
       date.setDate(date.getDate() + 1);
@@ -183,32 +190,34 @@ class Sidebar extends React.Component {
           name='option'
           type='text'
           value={this.state.option}
-          onChange={e => this.handleInput(e, 'option')}
+          onChange={e => this.handleSelect(e)}
         >
-          <option value='departureTime'>leave now</option>
+          <option value='leaveNow'>leave now</option>
           <option value='departureTime'>leave at</option>
           <option value='arrivalTime'>arrive by</option>
         </select>
-        <select
-          ref={this.timeRef}
-          id='time'
-          name='time'
-          type='text'
-          value={this.state.time}
-          onChange={e => this.handleInput(e, 'time')}
-        >
-          {this.renderTimeOptions()}
-        </select>
-        <select
-          ref={this.dateRef}
-          id='date'
-          name='date'
-          type='text'
-          value={this.state.date}
-          onChange={e => this.handleInput(e, 'date')}
-        >
-          {this.renderDateOptions()}
-        </select>
+        {this.state.option === 'leaveNow' ? null : (
+          <React.Fragment>
+            <select
+              id='time'
+              name='time'
+              type='text'
+              value={this.state.time}
+              onChange={e => this.handleSelect(e)}
+            >
+              {this.renderTimeOptions()}
+            </select>
+            <select
+              id='date'
+              name='date'
+              type='text'
+              value={this.state.date}
+              onChange={e => this.handleSelect(e)}
+            >
+              {this.renderDateOptions()}
+            </select>
+          </React.Fragment>
+        )}
         <ul className='buttons'>
           <li
             onClick={() => this.handleTransportation('DRIVING')}
@@ -259,6 +268,36 @@ class Sidebar extends React.Component {
       </div>
     );
   }
+}
+
+function getTime(date, time) {
+  if (date && time) {
+    return new Date(date + ' ' + time);
+  } else {
+    return new Date();
+  }
+}
+
+function getDefaultTime() {
+  let now = new Date();
+  let currentHour = now.getHours();
+  let currentMin = now.getMinutes();
+  if (currentMin < 30) {
+    currentMin = 30;
+  } else {
+    currentMin = '00';
+    currentHour++;
+  }
+  return `${currentHour}:${currentMin}`;
+}
+
+function getCurrentDate(date = new Date()) {
+  date = date
+    .toString()
+    .split(' ')
+    .splice(1, 3)
+    .join(' ');
+  return date;
 }
 
 export default Sidebar;
