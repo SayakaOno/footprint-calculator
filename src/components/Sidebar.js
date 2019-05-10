@@ -11,23 +11,17 @@ import walking_icon from '../images/walking_icon.png';
 import title from '../images/title.png';
 
 class Sidebar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      option: 'departureTime',
-      time: '',
-      date: ''
-    };
-    this.timeRef = React.createRef();
-    this.dateRef = React.createRef();
-  }
+  state = {
+    option: 'departureTime',
+    time: '',
+    date: '',
+    leaveNow: true
+  };
 
   componentDidMount() {
     let date = this.getCurrentDate();
     let time = this.getDefaultTime();
     this.setState({ time, date });
-    this.timeRef.current.innerHTML = this.renderTimeOptions();
-    this.dateRef.current.innerHTML = this.renderDateOptions();
   }
 
   shouldRenderMap = event => {
@@ -101,14 +95,16 @@ class Sidebar extends React.Component {
   renderTimeOptions = () => {
     let hour = 0;
     let min = '00';
-    let options = '';
+    let options = [];
 
     for (let i = 0; i < 47; i++) {
       let time = `${hour}:${min}`;
       let displayTime = `${hour > 12 ? hour - 12 : hour}:${min}`;
-      options += `<option value=${time}>${displayTime} ${
-        hour >= 12 ? 'PM' : 'AM'
-      }</option>`;
+      options.push(
+        <option value={time} key={i}>
+          {displayTime} {hour >= 12 ? 'PM' : 'AM'}
+        </option>
+      );
       if (i % 2) {
         min = '30';
       } else {
@@ -116,7 +112,7 @@ class Sidebar extends React.Component {
         min = '00';
       }
     }
-    return options;
+    return <React.Fragment>{options.map(option => option)}</React.Fragment>;
   };
 
   getDefaultTime() {
@@ -142,15 +138,17 @@ class Sidebar extends React.Component {
   };
 
   renderDateOptions = () => {
-    let options = '';
+    let options = [];
     let date = new Date();
     for (let i = 0; i < 14; i++) {
-      options += `<option value="${this.getCurrentDate(
-        date
-      )}">${this.getCurrentDate(date)}</option>`;
+      options.push(
+        <option value={this.getCurrentDate(date)} key={i}>
+          {this.getCurrentDate(date)}
+        </option>
+      );
       date.setDate(date.getDate() + 1);
     }
-    return options;
+    return <React.Fragment>{options.map(option => option)}</React.Fragment>;
   };
 
   render() {
@@ -187,6 +185,7 @@ class Sidebar extends React.Component {
           value={this.state.option}
           onChange={e => this.handleInput(e, 'option')}
         >
+          <option value='departureTime'>leave now</option>
           <option value='departureTime'>leave at</option>
           <option value='arrivalTime'>arrive by</option>
         </select>
@@ -197,7 +196,9 @@ class Sidebar extends React.Component {
           type='text'
           value={this.state.time}
           onChange={e => this.handleInput(e, 'time')}
-        />
+        >
+          {this.renderTimeOptions()}
+        </select>
         <select
           ref={this.dateRef}
           id='date'
@@ -206,10 +207,7 @@ class Sidebar extends React.Component {
           value={this.state.date}
           onChange={e => this.handleInput(e, 'date')}
         >
-          <option value='May 7 2019'>May 7, 2019</option>
-          <option value='May 8 2019'>May 8, 2019</option>
-          <option value='May 9 2019'>May 9, 2019</option>
-          <option value='May 10 2019'>May 10, 2019</option>
+          {this.renderDateOptions()}
         </select>
         <ul className='buttons'>
           <li
