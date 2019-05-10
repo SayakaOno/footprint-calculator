@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/footprint-calculator/precache-manifest.9fc9f85834c046aa86067717ba62b13e.js"
+  "/footprint-calculator/precache-manifest.394f68f70fe8a04aaafd727e3fd57f35.js"
 );
 
 self.addEventListener('message', (event) => {
