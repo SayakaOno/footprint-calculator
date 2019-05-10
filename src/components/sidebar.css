@@ -41,11 +41,8 @@
     margin: 0 auto;
   }
   .sidebar h1 {
-    max-width: 360px;
+    max-width: 380px;
     margin: 0 auto;
-  }
-  .sidebar h1 img {
-    width: 100%;
   }
   .adp {
     display: none;
@@ -55,6 +52,9 @@
   .sidebar h1 {
     background-position: 111% 80% !important;
     background-size: 50%;
+  }
+  .sidebar h1 img {
+    width: 100%;
   }
 }
 @media only screen and (max-width: 350px) {
