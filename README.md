@@ -1,4 +1,5 @@
 # Carbon Emission Calculator
+![footprint-calculator](https://user-images.githubusercontent.com/33141219/57586167-c630f080-74a6-11e9-994d-505bb4f67385.png)
 Carbon Emission Calculator navigation platform that aims to educate individuals by integrating sustainability awareness into one’s everyday transportation routine.<br/>
 [DEMO](https://sayakaono.github.io/footprint-calculator/)
 
