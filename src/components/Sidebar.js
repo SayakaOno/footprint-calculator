@@ -9,6 +9,7 @@ import driving_icon from '../images/driving_icon.png';
 import transit_icon from '../images/transit_icon.png';
 import walking_icon from '../images/walking_icon.png';
 import title from '../images/title.png';
+import { getYourLocation } from './App';
 
 const RENDERMODE = { 0: 'Initial', 1: 'Travel' };
 
@@ -47,7 +48,20 @@ class Sidebar extends React.Component {
   };
 
   handleInput = event => {
-    this.props.onChange(event.target.name, event.target.value);
+    if (event.target.value === 'Your location') {
+      getYourLocation(
+        position => {
+          this.props.onChange(
+            'currentLocation',
+            `${position.coords.latitude},${position.coords.longitude}`
+          );
+          this.checkModeAndRenderMap();
+        },
+        () => alert('Please accept location request!')
+      );
+    } else {
+      this.props.onChange(event.target.name, event.target.value);
+    }
   };
 
   getNewestState = (field, value) => {
@@ -96,17 +110,21 @@ class Sidebar extends React.Component {
     }
   };
 
+  checkModeAndRenderMap = () => {
+    if (this.renderMode() === RENDERMODE[1]) {
+      this.props.renderMapWithTMode(
+        this.props.travelMode,
+        this.getNewestState('option', this.state.option),
+        getTime(this.state.date, this.state.time)
+      );
+    } else if (this.renderMode() === RENDERMODE[0]) {
+      this.props.renderMap();
+    }
+  };
+
   onEnterHit = event => {
     if (event.key === 'Enter') {
-      if (this.renderMode() === RENDERMODE[1]) {
-        this.props.renderMapWithTMode(
-          this.props.travelMode,
-          this.getNewestState('option', this.state.option),
-          getTime(this.state.date, this.state.time)
-        );
-      } else if (this.renderMode() === RENDERMODE[0]) {
-        this.props.renderMap();
-      }
+      this.checkModeAndRenderMap();
     }
   };
 
@@ -173,7 +191,11 @@ class Sidebar extends React.Component {
           onChange={e => this.handleInput(e, 'currentLocation')}
           onKeyDown={this.onEnterHit}
           placeholder='starting point'
+          list='locationList'
         />
+        <datalist id='locationList'>
+          <option value='Your location' />
+        </datalist>
         <br />
         <label htmlFor='destination'>B</label>
         <input

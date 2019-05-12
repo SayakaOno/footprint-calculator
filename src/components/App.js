@@ -17,16 +17,7 @@ class App extends React.Component {
   };
 
   componentDidMount = () => {
-    this.setState({ renderMap: null, renderaMapWithtravelMode: null });
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        this.showPosition,
-        this.setInitialCenter
-      );
-    } else {
-      this.setInitialCenter();
-    }
+    getYourLocation(this.showPosition, this.setInitialCenter);
   };
 
   setInitialCenter = () => {
@@ -112,3 +103,11 @@ class App extends React.Component {
 }
 
 export default App;
+
+export const getYourLocation = (success, fail) => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, fail);
+  } else {
+    fail();
+  }
+};
